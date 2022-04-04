@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="40px" height="40px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 60.1 (88133) - https://sketch.com -->
+    <title>Icon/Truck Big</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Desktop-V2" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="WebKAM-014" transform="translate(-325.000000, -1963.000000)">
+            <g id="Icon/Scan-Highlighted" transform="translate(325.000000, 1963.000000)">
+                <g id="Scan">
+                    <rect id="Rectangle" stroke="#26AD90" stroke-width="2" x="1" y="1" width="38" height="38" rx="2"></rect>
+                    <rect id="Rectangle" stroke="#26AD90" stroke-width="2" x="11.4347826" y="11.4347826" width="18.1932367" height="17.1304348" rx="1"></rect>
+                    <rect id="Rectangle" fill="#FFFFFF" x="17.3913043" y="8.69565217" width="5.13833992" height="22.6086957"></rect>
+                    <polygon id="Rectangle" fill="#FFFFFF" transform="translate(19.960474, 20.000000) rotate(-270.000000) translate(-19.960474, -20.000000) " points="17.3913043 8.69565217 22.5296443 8.69565217 22.5296443 31.3043478 17.3913043 31.3043478"></polygon>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

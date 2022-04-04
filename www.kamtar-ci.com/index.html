@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="fr">
+	
+<!-- Mirrored from www.kamtar-ci.com/ by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 28 Mar 2022 14:31:53 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+		<title data-i18n="app.name"></title>
+		<meta name="description" content="Kamtar vous permet de réserver en quelques secondes un camion en Cote d'Ivoire et au Sénégal. On transporte tout, partout !" />
+		<meta name="robots" content="index, follow" />
+
+		<link rel="manifest" href="manifest.json" />
+		<!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+		<!-- Twitter -->
+		<meta name="twitter:site" content="@kamtar-ci" />
+		<meta name="twitter:creator" content="@kamtar-ci" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content="kamtar-ci" />
+		<meta name="twitter:description" content="Kamtar transport tout, partout." />
+		<meta name="twitter:image" content="img/icons/icon512.png" />
+
+		<!-- Facebook -->
+		<meta property="og:url" content="index.html" />
+		<meta property="og:title" content="Kamtar" />
+		<meta property="og:description" content="Kamtar transport tout, partout." />
+
+		<meta property="og:image" content="img/icons/icon512.png" />
+		<meta property="og:image:secure_url" content="img/icons/icon512.png" />
+		<meta property="og:image:type" content="image/png" />
+		<meta property="og:image:width" content="512" />
+		<meta property="og:image:height" content="512" />
+
+		<meta property="author" content="Kamtar" />
+
+		<link rel="shortcut icon" href="img/favicon/apple-touch-icon.png" />
+
+		<link rel="apple-touch-icon" sizes="180x180" href="img/favicon/apple-touch-icon.png" />
+		<link rel="icon" type="image/png" sizes="32x32" href="img/favicon/favicon-32x32.png" />
+		<link rel="icon" type="image/png" sizes="16x16" href="img/favicon/favicon-16x16.png" />
+
+		<meta name="msapplication-TileColor" content="#26ad90" />
+		<meta name="theme-color" content="#26ad90" />
+		<meta name="msapplication-navbutton-color" content="#26ad90" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="#26ad90" />
+
+		<script src="js/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+
+		<!-- font -->
+		<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" />
+		<link rel="stylesheet" href="css/accueil7950.css?v=1.0.265" />
+		<link rel="stylesheet" href="css/style7950.css?v=1.0.265" />
+
+		<script src="js/header7950.js?v=1.0.265" id="header_js"></script>
+		<script src="js/config7950.js?v=1.0.265" id="config_js"></script>
+
+		<!-- cookie -->
+		<script src="js/js.cookie.min7950.js?v=1.0.265"></script>
+		<script src="js/utils7950.js?v=1.0.265"></script>
+
+		<!-- i18n -->
+		<script src="js/i18next/i18next.min.js"></script>
+		<script src="js/i18next/jquery-i18next.min.js"></script>
+		<script src="js/i18next/i18nextXHRBackend.js"></script>
+
+		<!-- menu -->
+		<link rel="stylesheet" href="css/menu7950.css?v=1.0.265" />
+		<script src="js/menu7950.js?v=1.0.265"></script>
+
+		<script>
+			$(document).on("click", "#blocs_bouton_decouvrir, #blocs_bouton_voir", function () {
+				window.location.href = "raisons.html";
+			});
+
+			$(document).on("click", "#blocs_bouton_clients", function () {
+				window.location.href = "clients.html";
+			});
+			$(document).on("click", "#goto_contact_form", function () {
+				window.location.href = "contact.html";
+			});
+			$(document).on("click", "#goto_transport_spot", function () {
+				window.location.href = "spot-regulier.html#transport-spot";
+			});
+			$(document).on("click", "#goto_transport_regulier", function () {
+				window.location.href = "spot-regulier.html#transport-regulier";
+			});
+		</script>
+
+		<script>
+			$(document).on("click", "#contact_form_bouton", function () {
+				if ($("#contact_form_nom").val() == "") {
+					alert("Vous devez indiquer votre nom");
+				} else if ($("#contact_form_contact").val() == "") {
+					alert("Vous devez indiquer votre numéro de téléphone ou votre e-mail");
+				} else {
+					var postData = {
+						emetteur_email: $("#contact_form_contact").val(),
+						motif: "Je veux être recontacté. Téléphone : " + $("#contact_form_contact").val(),
+						message: "Message envoyé depuis kamtar-ci.com",
+						pays: code_pays_contact,
+					};
+
+					$.ajax({
+						type: "POST",
+						contentType: "application/json",
+						url: api_path_transport + "contact",
+						dataType: "json",
+						cache: false,
+						async: true,
+						timeout: api_timeout,
+						data: JSON.stringify(postData),
+						crossDomain: api_cross_domain,
+						headers: {
+							Token: "",
+						},
+						success: function (json) {
+							if (json == undefined) {
+								show_error("form_message", "Impossible d'envoyer le message");
+							} else {
+								$("#message_envoye_confirmation").show(0);
+								$("#contact_form_bouton").hide(0);
+							}
+						},
+						error: function (xhr, textStatus, errorThrown) {
+							handle_ajax_error(textStatus, xhr, "notification_warning", "div_errors_content");
+						},
+					})
+						.always(function () {})
+						.done(function () {});
+				}
+			});
+		</script>
+
+		<style>
+			#cssmenu #contact_form_bouton_reservez {
+				display: none;
+			}
+			
+			
+		</style>
+	</head>
+
+	<body class="accueil" style="display: none">
+
+		<nav class="navbar navbar-expand-lg navbar-light bg-dark-ligth text-white">
+			<div class="container-fluid text-white">
+			  <a class="navbar-brand" href="#">Accueil</a>
+			  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			  </button>
+			  <div class="collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav">
+				  <li class="nav-item">
+					<a class="nav-link active" aria-current="page" href="#">Home</a>
+				  </li>
+				  <li class="nav-item">
+					<a class="nav-link" href="#">Nos services</a>
+				  </li>
+				  <li class="nav-item">
+					<a class="nav-link" href="#">Contactez-nous</a>
+				  </li>
+				  
+				</ul>
+			  </div>
+			</div>
+		  </nav>
+		<!-- Google Tag Manager (noscript) -->
+		<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5PNFTZ5" height="0" width="0" style="display: none; visibility: hidden"></iframe></noscript>
+
+		<!-- popup erreur si nécessaire -->
+		<div class="notification warning" style="display: none" id="notification_warning">
+			<img src="img/Circle-cross_White.svg" class="picto_grand" />
+			<div class="description" id="div_errors_content"></div>
+		</div>
+
+		<header><!-- injection du menu en js --></header>
+
+		<div class="image_fond_accueil" style="">
+			<div class="opacite">
+				<nav id="navbar"><!-- injection de la navbar en js --></nav>
+
+				<div id="accueil_details">
+					<div class="container">
+						<div id="accueil_details_div">
+							<h1 id="h1_desktop">Pour vous, <span style="color:Red">Aigle</span><span style="color:black">Express</span> transporte tout, partout&nbsp;!</h1>
+							
+							<h2 style="color: #fff">Plateforme digitale de mise en relation entre transporteurs et expéditeurs.</h2>
+							<input type="button" id="contact_form_bouton_reservez" value="Commandez un camion" style="width: 268px !important; height: 50px" />
+						</div>
+						<div id="accueil_form_div">
+							<div id="accueil_phone">
+								<img id="picto_phone" src="img/iconfinder_smartphone.svg" />
+								<p id="phone_number" class=" ">00225 0757504313</p>
+							</div>
+							<h2>nous vous recontactons :</h2>
+							<div class="contact_form_div">
+								<input type="text" id="contact_form_nom" name="nom" class="contact_form" placeholder="Votre nom" />
+							</div>
+							<div class="contact_form_div">
+								<input type="text" id="contact_form_contact" name="email_ou_numero_de_telephone" class="contact_form" placeholder="Votre email ou n° de téléphone" />
+							</div>
+							<input type="hidden" name="type_message" value="Etre recontacté" />
+							<input type="submit" class="submit" id="contact_form_bouton" value="Recontactez-moi" />
+
+							<div id="message_envoye_confirmation" style="display: none">Votre message a été envoyé ! Merci.</div>
+
+							<!--<a href="/connexion">Pressé(e) ? Créez votre compte en ligne !</a>-->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- partie fond vert -->
+		<div id="trois_blocs" style="position: relative">
+			<div class="ombrage_hp"></div>
+			<div class="container lame_titre">
+				<h2>
+					Avec AigleExpress, fini les discours,<br />
+					le transport de marchandises est enfin simple !
+				</h2>
+			</div>
+			<div class="container lame_contenu">
+				<div id="trois_blocs_div">
+					<div class="trois_blocs_div_ind" id="trois_blocs_besoin">
+						
+						<h3 style="color: black;">
+							<br>
+							Livraison<br />
+							Express
+						</h3>
+						<p>Du tricycle au camion de 40 tonnes, <span style="color:Red">Aigle</span><span style="color:black">Express</span> met à votre disposition une flotte de 4000 chauffeurs répartis sur la Côte d'Ivoire.</p>
+						<input type="button" class="blocs_bouton" id="blocs_bouton_voir" value="Voir" />
+					</div>
+					<div class="trois_blocs_div_ind" id="trois_blocs_transport">
+						
+						<h3 style="color: black;">Un transport organisé<br />en quelques minutes</h3>
+						<p>Vos besoins peuvent être urgents. Avec <span style="font: bold;">AigleExpress</span>, obtenez le camion de votre choix depuis votre bureau ou votre domicile. Fini les palabres !</p>
+						<input type="button" class="blocs_bouton" id="blocs_bouton_reserver" value="Réserver" />
+					</div>
+					<div class="trois_blocs_div_ind" id="trois_blocs_fiabilite">
+						
+						<h3 style="color: black;">
+							La fiabilité que vous<br />
+							recherchez
+						</h3>
+						<p>Une équipe formée pour traiter vos marchandises selon vos standards.</p>
+						<input type="button" class="blocs_bouton" id="blocs_bouton_decouvrir" value="Découvrir" />
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- partie fond gris -->
+		<div id="blocs_experts_logos">
+			<img src="img/triangles-top2%402x.png" id="triangles_footer_bottom2" />
+			<div class="container trois_blocs_div">
+				<div class="container2">
+					<div id="bloc_experts">
+						<div id="bloc_experts2">
+							<h2>Nos experts, votre logistique</h2>
+							<p>La logistique n'est pas votre métier. Pourtant elle est essentielle à la réussite de votre entreprise. Grâce à Kamtar, améliorez vos flux et concentrez-vous sur votre coeur de métier !</p>
+							<input type="button" class="blocs_bouton" id="blocs_bouton_clients" value="Voir nos clients" />
+						</div>
+					</div>
+					<div id="bloc_logos">
+						
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- partie fond vert 2 -->
+		<div id="blocs_partenaire">
+			<div class="container lame_contenu_partenaire">
+				<div id="bloc_partenaire_vehicule">
+					<h2>Vous avez un véhicule?</h2>
+					<input type="button" class="bloc_partenaire_bouton" id="goto_contact_form" value="Devenez partenaire" />
+				</div>
+				<div id="bloc_partenaire_vehicule_img">
+					<img src="img/camion-detoure-2.png" id="partenaire_vehicule_img" />
+				</div>
+			</div>
+		</div>
+
+		<!-- partie fond blanc -->
+		<div id="blocs_spot_flux">
+			<div class="container">
+				<div class="container2">
+					<div class="blocs_spot_flux_div" id="bloc_spot">
+						<img src="img/delivery.png" />
+						<h2>Transport Spot</h2>
+						<p>Accédez à la plus grande flotte d'Afrique francophone en quelques instants et débarrassez-vous de vos galères habituelles.</p>
+
+						<input type="button" class="blocs_bouton blocs_bouton_savoir_plus" id="goto_transport_spot" value="En savoir plus" />
+					</div>
+					<div class="blocs_spot_flux_div" id="bloc_flux">
+						<img src="img/forklift.png" />
+						<h2>Flux réguliers</h2>
+						<p>Laissez-vous aider dans l'organisation et la gestion de vos opérations régulières sur des corridors afin de vous simplifier la tâche et de réduire vos coûts.</p>
+						<input type="button" class="blocs_bouton blocs_bouton_savoir_plus" id="goto_transport_regulier" value="En savoir plus" />
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- footer -->
+		<footer>
+			<!-- injection du footer en js -->
+		</footer>
+	</body>
+
+<!-- Mirrored from www.kamtar-ci.com/ by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 28 Mar 2022 14:32:02 GMT -->
+</html>
